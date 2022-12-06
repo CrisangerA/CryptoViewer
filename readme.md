@@ -1,33 +1,10 @@
-# How to start use? 💻
+# Application created with this template: 💻
 ````
 npx react-native init AwesomeApp --template https://github.com/CrisangerA/react-native-template-clean-arch.git
 ````
-I recomend this library after init project. [React Native Rename](https://github.com/junedomingo/react-native-rename)
-````
-$ npx react-native-rename AwesomeApp
-````
+[For more information about the template click here. React Native Template Clean Architecture](https://github.com/CrisangerA/react-native-template-clean-arch)
 
-### ⌨️ For create new Component:
-````
-yarn component (-s|-c) (core|layout|global) nameOfYourComponent
-````
-Type of component
-- -s simple: a single file with logic and styles
-- -c complex file into a folder
-Scope of component
-- core: base components for the graphical interface, overwriting of components of the main library. For example buttons, text, card and others.
-- layout: components that belong to the style of the application, inherits from core and global. For example the page component that is used with each page. A shared header, Titles and others.
-- global: at the developer's discretion. to separate the components of each page by folder or for components that are used a lot between pages. See the auth/ and @forms/ examples.
+### Includes animations between screens, for the modal and tabs also includes best practices.
 
-### ⌨️ For create new Context:
-````
-yarn context nameOfYourContext
-````
-### ⌨️ For create new Modules:
-````
-yarn module nameOfYourModule
-````
-### ⌨️ For create new Hook:
-````
-yarn hook nameOfYourHook
-````
+## Screenshots
+![CriptoViewer](https://user-images.githubusercontent.com/46910469/205804175-836ef4f0-8d31-4e26-86ca-e695e59e28b3.png)
