@@ -10,3 +10,5 @@ Application to monitor cryptocurrency purchase orders indicating the percentage 
 
 ## Screenshots
 ![CriptoViewer](https://user-images.githubusercontent.com/46910469/205804175-836ef4f0-8d31-4e26-86ca-e695e59e28b3.png)
+
+![cryptoviewer](https://user-images.githubusercontent.com/46910469/205806534-b2550316-0fa8-4464-8af6-81635cfb8505.gif)
