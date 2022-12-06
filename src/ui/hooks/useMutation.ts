@@ -6,16 +6,16 @@ import {ApiResponse} from '@modules/shared/domain/model';
 import {ToastAndroid} from 'react-native';
 
 interface Props {
-  service: (data: any) => Promise<ApiResponse>;
+  service: (data: any) => Promise<any>;
   showMessage?: boolean;
   durationMessage?: 'LONG' | 'SHORT';
   options?: UseMutationOptions;
   onError?: (err: any) => void;
-  onSuccess?: (data: ApiResponse) => void;
+  onSuccess?: (data: any) => void;
 }
-const useMutation = (props: Props) => {
+const useMutation = <T>(props: Props) => {
   const {durationMessage} = props;
-  const mutation = useMutationNative<ApiResponse>(props.service, {
+  const mutation = useMutationNative<T | ApiResponse>(props.service, {
     onError: (e: any) => {
       props.onError && props.onError(e);
       ToastAndroid.show(

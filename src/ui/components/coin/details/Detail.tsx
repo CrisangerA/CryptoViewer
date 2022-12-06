@@ -1,60 +1,73 @@
 import {useQuery} from '@tanstack/react-query';
-import {ActivityIndicator, ScrollView, Text} from 'react-native';
+import {
+  ActivityIndicator,
+  Clipboard,
+  ToastAndroid,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React from 'react';
+import {ScrollView, Text} from '@components/core';
 import {MainStyles, textStyles} from '@components/core/styles';
 import appInjector from '@config/di';
-import CoinService from '@modules/coins/application/service';
+import CoinUseCase from '@modules/coins/application/service';
 // ---------------------------------------------------------------------------------------------------
-const coinService = appInjector.injectClass(CoinService);
+const coinUseCase = appInjector.injectClass(CoinUseCase);
 export default function CoinDetail({id}: {id: string}) {
   const {data, isLoading} = useQuery(
     ['GetCoinDetails', id],
-    () => coinService.GetCoinDetails(id),
+    () => coinUseCase.GetCoinDetails(id),
     {
       staleTime: Infinity,
     },
   );
+  async function handleOpenLink(link: string) {
+    Clipboard.setString(link);
+    ToastAndroid.show('Copied', ToastAndroid.SHORT);
+  }
   return (
-    <ScrollView>
-      <Text style={textStyles.title}>Description</Text>
-      {isLoading && <ActivityIndicator />}
-      <Text style={MainStyles.text}>{data?.description?.en}</Text>
+    <View>
+      <ScrollView>
+        <Text text="Description" style={textStyles.title} />
+        {isLoading && <ActivityIndicator />}
+        <Text text={data?.description?.en || ''} style={MainStyles.text} />
 
-      <Text style={textStyles.title}>Exchanges</Text>
-      {data?.tickers.map(tiker => (
-        <Text key={tiker.market.name} style={MainStyles.text}>
-          {tiker.market.name}
-        </Text>
-      ))}
+        <Text text="Exchanges" style={textStyles.title} />
+        {data?.tickers.map(tiker => (
+          <Text text={tiker.market.name} key={tiker.market.name} />
+        ))}
 
-      <Text style={textStyles.title}>Official Links</Text>
-      {data?.links.homepage.map(tiker => (
-        <Text key={`H-${tiker}`} style={MainStyles.text} numberOfLines={1}>
-          {tiker}
-        </Text>
-      ))}
-      {data?.links.blockchain_site.map(tiker => (
-        <Text key={`B-${tiker}`} style={MainStyles.text} numberOfLines={1}>
-          {tiker}
-        </Text>
-      ))}
+        <Text text="Official Links" style={textStyles.title} />
+        {data?.links.homepage.map(tiker => (
+          <TouchableOpacity
+            key={`H-${tiker}`}
+            onPress={_ => handleOpenLink(tiker)}>
+            <Text text={tiker} numberOfLines={1} type="link" />
+          </TouchableOpacity>
+        ))}
+        {data?.links.blockchain_site.map(tiker => (
+          <TouchableOpacity
+            key={`B-${tiker}`}
+            onPress={_ => handleOpenLink(tiker)}>
+            <Text text={tiker} numberOfLines={1} type="link" />
+          </TouchableOpacity>
+        ))}
 
-      <Text style={textStyles.title}>Repositories</Text>
-      {data?.links.repos_url.bitbucket.map(tiker => (
-        <Text key={tiker} style={MainStyles.text}>
-          {tiker}
-        </Text>
-      ))}
-      {data?.links.repos_url.github.map(tiker => (
-        <Text key={tiker} style={MainStyles.text}>
-          {tiker}
-        </Text>
-      ))}
+        <Text text="Repositories" style={textStyles.title} />
+        {data?.links.repos_url.bitbucket.map(tiker => (
+          <TouchableOpacity key={tiker} onPress={_ => handleOpenLink(tiker)}>
+            <Text text={tiker} type="link" />
+          </TouchableOpacity>
+        ))}
+        {data?.links.repos_url.github.map(tiker => (
+          <TouchableOpacity key={tiker} onPress={_ => handleOpenLink(tiker)}>
+            <Text text={tiker} type="link" />
+          </TouchableOpacity>
+        ))}
 
-      <Text style={textStyles.title}>Status</Text>
-      <Text>{JSON.stringify(data?.developer_data)}</Text>
-
-      {/* <Text>{JSON.stringify(data?.tickers)}</Text> */}
-    </ScrollView>
+        <Text text="Status" style={textStyles.title} />
+        <Text text={JSON.stringify(data?.developer_data)} />
+      </ScrollView>
+    </View>
   );
 }

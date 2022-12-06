@@ -38,7 +38,7 @@ export default function ModalBottomSheet({children}: PropsWithChildren) {
   }, []);
   return (
     <View style={styles.root}>
-      <AnimatedBlurView style={[styles.blurView, {opacity}]} blurType="light" />
+      <AnimatedBlurView style={[styles.blurView, {opacity}]} blurType="dark" />
       <View style={styles.container}>{children}</View>
     </View>
   );

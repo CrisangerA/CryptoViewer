@@ -1,10 +1,10 @@
 import React from 'react';
 import {Navigation} from '@imports/react-native-navigation';
-import auth from '@react-native-firebase/auth';
 // Providers
 import WrapApp from './App';
 // Screens
 import {NavigationTypes, Screens} from './src/config/navigation';
+import {LogBox} from 'react-native';
 
 // Launch App
 class ReactApp {
@@ -77,14 +77,9 @@ class ReactApp {
     });
   }
   Start() {
+    LogBox.ignoreAllLogs();
     Navigation.events().registerAppLaunchedListener(() => {
-      auth().onAuthStateChanged(user => {
-        if (user) {
-          NavigationTypes.Drawer();
-        } else {
-          NavigationTypes.Unauth();
-        }
-      });
+      NavigationTypes.Main();
     });
   }
 }

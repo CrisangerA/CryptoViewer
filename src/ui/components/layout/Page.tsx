@@ -17,7 +17,7 @@ export default function Page({children}: PropsWithChildren) {
 }
 
 const styles = StyleSheet.create({
-  root: {flex: 1, padding: 10, backgroundColor: 'transparent'},
+  root: {flex: 1, padding: 0, backgroundColor: 'transparent'},
   image: {
     width: '100%',
     height: '100%',

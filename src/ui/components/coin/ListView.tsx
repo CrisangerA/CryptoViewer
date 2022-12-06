@@ -1,43 +1,36 @@
 import React from 'react';
 import {View, StyleSheet, Animated} from 'react-native';
-import {useQuery} from '@tanstack/react-query';
+//import {useQuery} from '@tanstack/react-query';
 // modules
-import CoinService from '@modules/coins/application/service';
+import CoinUseCase from '@modules/coins/application/service';
 //
 import {Sizes} from '@components/core/styles';
-import Coin from './Coin';
+import Coin, {COIN_SIZE} from './Coin';
 import useNavigation from '@hooks/useNavigation';
 import {Market} from '@modules/coins/domain/model';
 import appInjector from '@config/di';
-//const {height} = Dimensions.get('window');
-// di
-//const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
-const coinService = appInjector.injectClass(CoinService);
+import useQuery from '@hooks/useQuery';
+// ----------------------------------------------------------------------------------------
+const coinUseCase = appInjector.injectClass(CoinUseCase);
 export default function ListView() {
   const {componentId} = useNavigation();
   // hooks
-  const {data} = useQuery(
-    ['GetCoinsMarkets'],
-    () => coinService.GetCoinsMarkets(),
-    {
-      staleTime: Infinity,
+  const {data, refetch, isRefetching} = useQuery<Market[]>({
+    key: ['GetCoinsMarkets'],
+    service: () => coinUseCase.GetCoinsMarkets(),
+    options: {
+      staleTime: 60 * 60 * 1000 * 1,
     },
-  );
+  });
 
   // Animation
   const scrollY = React.useRef(new Animated.Value(0)).current;
   return (
     <View>
-      {/* <Image
-        source={{
-          uri: imageUrl,
-        }}
-        style={styles.image}
-        blurRadius={50}
-      /> */}
       <Animated.FlatList
         data={data || []}
-        initialNumToRender={8}
+        contentContainerStyle={styles.flatList}
+        showsVerticalScrollIndicator={false}
         keyExtractor={item => item.id as any}
         renderItem={({item, index}) => {
           return (
@@ -49,11 +42,17 @@ export default function ListView() {
             />
           );
         }}
-        contentContainerStyle={styles.flatList}
+        getItemLayout={(_, index) => ({
+          index,
+          length: COIN_SIZE,
+          offset: COIN_SIZE * index,
+        })}
         onScroll={Animated.event(
           [{nativeEvent: {contentOffset: {y: scrollY}}}],
           {useNativeDriver: true},
         )}
+        onRefresh={refetch}
+        refreshing={isRefetching}
       />
     </View>
   );

@@ -6,6 +6,7 @@ export const Colors = {
   text: '#000',
   bgColor: '#000',
   lighter: NativeColors.lighter,
+  underlay: 'rgba(0,0,0, 0.1)',
 };
 export const Fonts = {
   fontSizeCardTitle: 20,
@@ -48,6 +49,10 @@ export const textStyles = StyleSheet.create({
   subtitle: {
     fontSize: Theme.text.size.subtitle,
   },
+  link: {
+    fontStyle: 'italic',
+    color: Theme.color.primary,
+  },
 });
 
 export const buttonStyles = StyleSheet.create({
@@ -58,10 +63,12 @@ export const buttonStyles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: Theme.layout.borderRadius(3),
     elevation: 10,
+    //flex: 1,
   },
   transparent: {
     elevation: 0,
     backgroundColor: 'transparent',
+    borderRadius: 0,
   },
   outlined: {},
 });
@@ -69,7 +76,7 @@ export const buttonStyles = StyleSheet.create({
 export const cardStyles = StyleSheet.create({
   root: {
     borderRadius: Theme.layout.borderRadius(3),
-    padding: Theme.layout.borderRadius(5),
+    //padding: Theme.layout.borderRadius(5),
     backgroundColor: '#fff',
     elevation: 6,
     marginHorizontal: 30,
@@ -84,6 +91,9 @@ export const cardStyles = StyleSheet.create({
 
 export const MainStyles = StyleSheet.create({
   // FOR LAYOUT
+  p5: {
+    padding: Theme.layout.padding(5),
+  },
   ml2: {
     marginLeft: 8,
   },

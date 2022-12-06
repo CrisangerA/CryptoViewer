@@ -1,21 +1,26 @@
-import {TouchableOpacity} from 'react-native';
+import {StyleProp, TouchableHighlight, ViewStyle} from 'react-native';
 import React from 'react';
 import Text from './Text';
-import {buttonStyles as styles} from './styles';
+import {buttonStyles as styles, Colors} from './styles';
 interface Props {
   type: 'root' | 'transparent' | 'outlined';
   title: string;
   onPress: () => void;
   disabled?: boolean;
+  style?: StyleProp<ViewStyle> | undefined;
 }
 Button.defaultProps = {
   type: 'transparent',
 };
-export default function Button({type, title, onPress, disabled}: Props) {
-  const style = [styles.root, styles[type]];
+export default function Button({type, title, onPress, disabled, style}: Props) {
+  const rootStyle = [styles.root, styles[type], style];
   return (
-    <TouchableOpacity style={style} onPress={onPress} disabled={disabled}>
+    <TouchableHighlight
+      style={rootStyle}
+      onPress={onPress}
+      disabled={disabled}
+      underlayColor={Colors.underlay}>
       <Text type="button" text={title} />
-    </TouchableOpacity>
+    </TouchableHighlight>
   );
 }

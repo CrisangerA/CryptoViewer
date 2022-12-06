@@ -4,7 +4,6 @@ import {fCurrency} from '@modules/shared/domain/utils/formatNumber';
 import React from 'react';
 import {
   Image,
-  Text,
   View,
   StyleSheet,
   Animated,
@@ -12,6 +11,7 @@ import {
 } from 'react-native';
 import {Navigation} from 'react-native-navigation';
 import {Screens} from '@config/navigation';
+import {Text} from '@components/core';
 // ---------------------------------------------------------------------------------------------
 interface Props {
   market: Market;
@@ -20,7 +20,7 @@ interface Props {
   componentId: string;
 }
 // ----------------------------------------------------------------------------
-const COIN_SIZE = Sizes.AvatarImage + Sizes.Padding * 2 + Sizes.Margin;
+export const COIN_SIZE = Sizes.AvatarImage + Sizes.Padding * 2 + Sizes.Margin;
 export default class CoinCard extends React.PureComponent<Props> {
   constructor(props: Props) {
     super(props);
@@ -111,14 +111,16 @@ export default class CoinCard extends React.PureComponent<Props> {
               ]}>
               <View style={styles.text}>
                 {/* <Text style={MainStyles.cardTitle}>{market.name}</Text> */}
-                <Text style={MainStyles.cardTitle}>
-                  {market.symbol.toUpperCase()}
-                </Text>
+                <Text
+                  text={market.symbol.toUpperCase()}
+                  style={MainStyles.cardTitle}
+                />
               </View>
               <View>
-                <Text style={MainStyles.cardSubtitle}>
-                  {fCurrency(market.current_price)}
-                </Text>
+                <Text
+                  text={fCurrency(market.current_price)}
+                  style={MainStyles.cardSubtitle}
+                />
               </View>
             </View>
           </View>

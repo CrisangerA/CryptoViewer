@@ -7,18 +7,14 @@ import {
 // ---------------------------------------------------------------------
 interface Props {
   key: QueryKey;
-  service: () => Promise<ApiResponse>;
+  service: () => Promise<any>;
   showMessage?: boolean;
   options?: UseQueryOptions | any;
   onError?: (err: any) => void;
   onSuccess?: (data: ApiResponse) => void;
 }
-const useQuery = (props: Props) => {
-  const query = useQueryNative<ApiResponse>(
-    props.key,
-    props.service,
-    props.options,
-  );
+const useQuery = <T>(props: Props) => {
+  const query = useQueryNative<T>(props.key, props.service, props.options);
   return query;
 };
 

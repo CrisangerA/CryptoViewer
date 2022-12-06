@@ -4,14 +4,18 @@ import React, {PropsWithChildren} from 'react';
 interface Props {
   mb?: number;
   m?: number;
+  p?: number;
 }
-const Box = ({mb, m, children}: PropsWithChildren<Props>) => {
+const Box = ({mb, m, p, children}: PropsWithChildren<Props>) => {
   const style = [styles.root];
   if (m) {
     style.push({margin: m});
   }
   if (mb) {
     style.push({marginBottom: mb});
+  }
+  if (p) {
+    style.push({padding: p});
   }
   if (children) {
     return <View style={style}>{children}</View>;

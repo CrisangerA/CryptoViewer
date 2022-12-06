@@ -1,7 +1,7 @@
 import {Navigation} from '@imports/react-native-navigation';
 // Screens
-import CoinsDetailPage from 'src/ui/pages/Coin/details';
-import CoinsMarkersPage from 'src/ui/pages/Coin/markers';
+import CoinsDetailPage from 'src/ui/pages/coin/details';
+import CoinsMarkersPage from 'src/ui/pages/coin/markers';
 // Modals
 import ModalAddOrder from '@components/coin/details/AddOrder';
 //----------------------------------------------------------------
@@ -21,64 +21,7 @@ export const Screens = {
 };
 // Define type of root navigation
 export const NavigationTypes = {
-  Drawer: () => {
-    Navigation.setRoot({
-      root: {
-        sideMenu: {
-          center: {
-            stack: {
-              id: 'AuthStack',
-              children: [
-                {
-                  component: {
-                    name: 'HomeScreen',
-                  },
-                },
-              ],
-            },
-          },
-          left: {
-            component: {
-              name: 'AccountScreen',
-            },
-          },
-        },
-      },
-    });
-  }, // OR
-  BottomTabs: () => {
-    Navigation.setRoot({
-      root: {
-        bottomTabs: {
-          children: [
-            {
-              stack: {
-                children: [
-                  {
-                    component: {
-                      name: 'HomeScreen',
-                    },
-                  },
-                ],
-              },
-            },
-            {
-              stack: {
-                children: [
-                  {
-                    component: {
-                      name: 'AccountScreen',
-                    },
-                  },
-                ],
-              },
-            },
-          ],
-        },
-      },
-    });
-  },
-  Unauth: () => {
+  Main: () => {
     Navigation.setRoot({
       root: {
         stack: {

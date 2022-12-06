@@ -1,7 +1,7 @@
 import Coin, {CoinDetail, Market} from '../domain/model';
 import ICoinRepository from '../domain/repository';
 
-export default class CoinService {
+export default class CoinUseCase {
   public static inject = ['ICoinRepository'] as const;
   constructor(private readonly repository: ICoinRepository) {}
   // Transform in dto

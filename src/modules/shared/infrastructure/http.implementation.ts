@@ -19,7 +19,7 @@ export default class Http implements HttpRepository {
   };
   private successCallback =
     (resolve: any, reject: any) => async (response: Response) => {
-      console.log(response.status);
+      console.log('HttpRepository: ', response.status);
       const data = await response.json();
       if (response.ok) {
         resolve(

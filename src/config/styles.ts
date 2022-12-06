@@ -7,6 +7,7 @@ export const Theme = {
     primary: '#f50057',
     secondary: 'yellow',
     text: '#212121',
+    input: '#000000',
   },
   text: {
     size: {
