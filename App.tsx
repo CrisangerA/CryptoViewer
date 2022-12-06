@@ -4,6 +4,7 @@ import {NavigationComponentProps} from 'react-native-navigation';
 // Contexts
 //import dependencyInjection from 'src/config/di';
 import {NavigationProvider} from 'src/ui/contexts/NavigationContext';
+import {CoinsProvider} from '@contexts/CoinsContext';
 
 // -----------------------------------------------------
 //
@@ -17,7 +18,7 @@ export default function WrapApp({
   return (
     <QueryClientProvider client={queryClient}>
       <NavigationProvider componentId={componentId}>
-        {children}
+        <CoinsProvider>{children}</CoinsProvider>
       </NavigationProvider>
     </QueryClientProvider>
   );

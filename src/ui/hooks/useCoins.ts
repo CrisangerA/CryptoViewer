@@ -4,25 +4,45 @@ import Order from '@modules/orders/domain/model';
 import useQuery from '@hooks/useQuery';
 import {ToastAndroid} from 'react-native';
 import React from 'react';
+import {Market} from '@modules/coins/domain/model';
+import CoinUseCase from '@modules/coins/application/service';
 
 // --------------------------------------------------------------------------------------
 interface Props {
   coin?: string;
 }
 const ordersUseCase = injector.injectClass(OrdersUseCase);
+const coinUseCase = injector.injectClass(CoinUseCase);
 export default function useCoins({coin}: Props = {coin: ''}) {
   const [data, setData] = React.useState<Order[]>([]);
   // hooks
-  const {isLoading, isRefetching, refetch} = useQuery<Order[]>({
+  const {
+    data: coins,
+    refetch: refetchCoins,
+    isRefetching,
+  } = useQuery<Market[]>({
+    key: ['GetCoinsMarkets'],
+    service: () => coinUseCase.GetCoinsMarkets(),
+    options: {
+      staleTime: 60 * 60 * 1000 * 0.125,
+    },
+  });
+  const {isLoading: loading, refetch} = useQuery<Order[]>({
     key: ['GetAllOrders', coin],
-    service: () => ordersUseCase.GetAllOrders(coin || ''),
+    service: () => ordersUseCase.GetAllOrdersByCoin(coin || ''),
     options: {
       staleTime: 0,
       enabled: coin ? true : false,
       onSuccess: (res: Order[]) => setData(res),
     },
   });
-  const loading = isLoading || isRefetching;
+  const {data: orders, refetch: refetchAllOrders} = useQuery<Order[]>({
+    key: ['GetAllOrders', coin],
+    service: () => ordersUseCase.GetAllOrders(),
+    options: {
+      staleTime: 0,
+    },
+  });
   // events
   async function createNewOrder(order: Order) {
     try {
@@ -44,5 +64,16 @@ export default function useCoins({coin}: Props = {coin: ''}) {
     }
   }
 
-  return {data, loading, createNewOrder, refetch, deleteOrder};
+  return {
+    data,
+    loading,
+    createNewOrder,
+    refetch,
+    deleteOrder,
+    coins,
+    refetchCoins,
+    isRefetching,
+    orders,
+    refetchAllOrders,
+  };
 }

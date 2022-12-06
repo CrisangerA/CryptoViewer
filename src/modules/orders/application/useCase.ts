@@ -5,10 +5,12 @@ export default class OrdersUseCase {
   constructor(private readonly repository: IOrdersRepository) {}
   public static inject = ['IOrdersRepository'] as const;
 
-  async GetAllOrders(coin: string) {
-    return this.repository.GetAllOrders(coin);
+  async GetAllOrdersByCoin(coin: string) {
+    return this.repository.GetAllOrdersByCoin(coin);
   }
-
+  async GetAllOrders() {
+    return this.repository.GetAllOrders();
+  }
   async CreateNewOrder(order: Order) {
     return this.repository.CreateNewOrder(order);
   }

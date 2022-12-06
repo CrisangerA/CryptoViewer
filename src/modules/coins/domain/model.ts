@@ -1,3 +1,5 @@
+import Order from '@modules/orders/domain/model';
+
 /* eslint-disable semi */
 export default interface Coin {
   id: string;
@@ -7,6 +9,7 @@ export default interface Coin {
 
 export interface Market {
   id: string;
+  orders: Order[];
   symbol: string;
   name: string;
   image: string;
